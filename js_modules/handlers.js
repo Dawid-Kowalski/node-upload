@@ -1,3 +1,6 @@
+const fs = require("fs");
+
+
 function upload(request, response) {
 	console.log("Rozpoczęcie obsługi ządania upload");
 	response.write("Rozpoczęcie ładowania");
@@ -6,8 +9,11 @@ function upload(request, response) {
 
 function welcome(request, response) {
 	console.log("Rozpoczęcie obsługi żadania welcome");
-	response.write("Strona główna");
-	response.end();
+	fs.readFile("../templates/form.html", function(err, template){
+		response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
+        response.write(template);
+        response.end();
+	});
 }
 
 function error(request,response) {
