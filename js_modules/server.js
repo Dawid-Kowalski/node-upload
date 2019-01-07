@@ -4,7 +4,7 @@ const handlers = require("./handlers.js");
 function start() {
 
 	function onRequest(request, response) {
-		console.log("Odebrano zapytanie" + request.url + "zapytanie");
+		console.log("Odebrano zapytanie " + request.url + " zapytanie");
 		response.writeHead(200, {"Content-type": "text/plain; charset=utf-8"});
 
 		switch(request.url) {

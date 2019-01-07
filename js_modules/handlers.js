@@ -1,12 +1,16 @@
 const fs = require("fs");
 const formidable = require("formidable");
 
+let counter = 0;
+let fileName = "";
 
 function upload(request, response) {
 	console.log("Rozpoczęcie obsługi ządania upload");
 	const form = new formidable.IncomingForm();
 	form.parse(request, function(error, fields, files) {
-		fs.renameSync(files.upload.path, "test.png");
+		counter++;
+		fileName = "plik" + counter + ".png";
+		fs.renameSync(files.upload.path, fileName);
 		response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
         response.write("przesłany obrazek:<br/>");
         response.write("<img src='/show' />");
@@ -30,7 +34,7 @@ function error(request,response) {
 }
 
 function show(request, response) {
-	fs.readFile("test.png", "binary", function(error, file) {
+	fs.readFile(fileName, "binary", function(error, file) {
 		response.writeHead(200, {"Content-Type": "image/png"});
 		response.write(file, "binary");
 		response.end();
