@@ -1,15 +1,17 @@
 const fs = require("fs");
 const formidable = require("formidable");
 
-let counter = 0;
 let fileName = "";
 
 function upload(request, response) {
 	console.log("Rozpoczęcie obsługi ządania upload");
 	const form = new formidable.IncomingForm();
 	form.parse(request, function(error, fields, files) {
-		counter++;
-		fileName = "plik" + counter + ".png";
+		if(fields.title == "") {
+			fileName = files.upload.name;
+		} else {
+			fileName = fields.title + ".jpg";
+		}
 		fs.renameSync(files.upload.path, fileName);
 		response.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
         response.write("przesłany obrazek:<br/>");
